@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Recipe Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+    <div id="app">
+        <!-- Recipe List View -->
+        <div id="recipe-list-view">
+            <header>
+                <h1>My Recipes</h1>
+                <button id="add-recipe-btn" class="primary-btn">+ New Recipe</button>
+            </header>
+            
+            <div id="recipes-container">
+                <!-- Recipes will be populated here -->
+                <div id="empty-state" class="hidden">
+                    <p>You don't have any recipes yet.</p>
+                    <button id="add-first-recipe-btn" class="secondary-btn">Add Your First Recipe</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Editor View -->
+        <div id="recipe-editor-view" class="hidden">
+            <header>
+                <button id="back-to-list-btn" class="text-btn">← Back</button>
+                <h1 id="editor-title">New Recipe</h1>
+                <button id="save-recipe-btn" class="primary-btn">Save</button>
+            </header>
+            
+            <div class="form-group">
+                <label for="recipe-name">Recipe Name</label>
+                <input type="text" id="recipe-name" placeholder="Enter recipe name">
+            </div>
+            
+            <div class="form-group">
+                <label for="base-servings">Base Servings</label>
+                <input type="number" id="base-servings" value="1" min="1">
+            </div>
+            
+            <div class="form-group">
+                <label>Ingredients</label>
+                <div id="ingredients-list">
+                    <!-- Ingredients will be populated here -->
+                </div>
+                
+                <div class="add-ingredient-form">
+                    <input type="text" id="new-ingredient-name" placeholder="Ingredient name">
+                    <div class="quantity-unit-row">
+                        <input type="text" id="new-ingredient-quantity" placeholder="Quantity">
+                        <input type="text" id="new-ingredient-unit" placeholder="Unit (g, cups, etc.)">
+                    </div>
+                    <button id="add-ingredient-btn" class="secondary-btn">Add Ingredient</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Detail View -->
+        <div id="recipe-detail-view" class="hidden">
+            <header>
+                <button id="back-from-detail-btn" class="text-btn">← Back</button>
+                <h1 id="detail-recipe-name">Recipe Name</h1>
+                <button id="edit-recipe-btn" class="text-btn">Edit</button>
+            </header>
+            
+            <div class="detail-info">
+                <p>Base Servings: <span id="detail-base-servings">1</span></p>
+            </div>
+            
+            <div class="scale-section">
+                <h2>Scale Recipe</h2>
+                <div class="scale-controls">
+                    <div>
+                        <label for="scale-factor">Scale Factor: <span id="scale-factor-value">1.0</span></label>
+                        <input type="range" id="scale-factor" min="0.1" max="5" step="0.1" value="1">
+                    </div>
+                    <div class="scaled-servings">
+                        <span>Scaled Servings</span>
+                        <div id="scaled-servings-value">1</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ingredients-section">
+                <h2>Ingredients</h2>
+                <ul id="scaled-ingredients-list">
+                    <!-- Scaled ingredients will be populated here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.log('Service Worker registration failed', err));
+        }
+    </script>
+</body>
+</html>
